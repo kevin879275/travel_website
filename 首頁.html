@@ -1,0 +1,41 @@
+<html xmlns ="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charest=utf8" />
+	<title>home</title>
+</head>
+<body background="images/456.jpg">
+	<font size = "100">
+	<div align="center">
+		<b>新北市旅遊網站</b>
+	</div>
+	</font>
+	<a href="天氣.html"><img src="images/天氣.jpg" width="200" height="200" style="position:absolute;top:700px; left:50px;"></a>
+	<a href="旅館.html"><img src="images/旅館.jpg" width="200" height="200" style="position:absolute;top:700px; left:450px;"></a>
+	<a href="停車.html"><img src="images/停車.png" width="200" height="200" style="position:absolute;top:700px; left:850px;"></a>
+	<a href="商店.html"><img src="images/商店.jpg" width="200" height="200" style="position:absolute;top:700px; left:1250px;"></a>
+	<a href="活動.html"><img src="images/活動.jpg" width="200" height="200" style="position:absolute;top:700px; left:1650px;"></a>
+	<font size="20">
+	<b style="position:absolute;top:900px; left:90px;">天氣</b>
+	<b style="position:absolute;top:900px; left:490px;">旅館</b>
+	<b style="position:absolute;top:900px; left:890px;">停車</b>
+	<b style="position:absolute;top:900px; left:1290px;">商店</b>
+	<b style="position:absolute;top:900px; left:1690px;">活動</b>
+    </font>
+	<script language="JavaScript" type="text/javascript">
+        function ShowTime()
+        {
+            var NowDate = new Date();
+            var d = NowDate.getDay();
+            var dayNames = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+            document.getElementById('showbox').innerHTML = '目前時間：' + NowDate.toLocaleString();
+             document.getElementById('showbox').innerHTML += "<br>" +'（' + dayNames[d] + '）';
+            setTimeout('ShowTime()', 1000);
+        }
+    </script>
+    <body onload="ShowTime()">
+    <form id="form1" runat="server">
+        <div id = "showbox" align="center" style="font-size:70px;line-height: 300px;"></div>
+    </form>
+</body>
+</body>
+</html>

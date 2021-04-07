@@ -1,0 +1,41 @@
+<html xmlns ="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charest=utf8" />
+	<title>Weather</title>
+</head>
+<body background="images/456.jpg">
+	<a href="首頁.html"><img src="images/首頁.jpg" width="100" height="100" style="position:absolute;top:10px; right:200px;"></a>
+	<a href="旅館.html"><img src="images/旅館.jpg" width="100" height="100" style="position:absolute;top:200px; right:200px;"></a>
+	<a href="停車.html"><img src="images/停車.png" width="100" height="100" style="position:absolute;top:390px; right:200px;"></a>
+	<a href="商店.html"><img src="images/商店.jpg" width="100" height="100" style="position:absolute;top:580px; right:200px;"></a>
+	<a href="活動.html"><img src="images/活動.jpg" width="100" height="100" style="position:absolute;top:770px; right:200px;"></a>
+	<font size="20">
+	<b style="position:absolute;top:40px; right:100px;">首頁</b>
+	<b style="position:absolute;top:230px; right:100px;">旅館</b>
+	<b style="position:absolute;top:420px; right:100px;">停車</b>
+	<b style="position:absolute;top:610px; right:100px;">商店</b>
+	<b style="position:absolute;top:810px; right:100px;">活動</b>
+    </font>
+	<input type="text" id="address" value="元智大學"> &nbsp
+	<button type="submit" onclick="getWeather()" style="width:100px">查詢天氣</button><br>
+	<p id="res">Weather Information!</p>
+
+	<script>
+		function getWeather(){
+
+			var address = document.getElementById("address").value;
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST","http://localhost:1880/weatherDB",false);
+			xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhttp.send("address=" + address);
+
+			document.getElementById("res").innerHTML = xhttp.responseText;
+
+			var response = JSON.parse(xhttp.responseText);
+
+			document.getElementById("res").innerHTML = "所在城市: " + response.city + "、 天氣: "+ response.weather + "、 氣溫: " + response.temperature + " °C 、 最高溫: " + response.maxt + " °C 、 最低溫: " + response.mint + "、 濕度: " + response.humidity + "、 風速: " + response.windspeed;
+		}
+	</script>
+</body>
+</html>

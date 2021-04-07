@@ -1,0 +1,132 @@
+<html xmlns ="http://www.w3.org/1999/xhtml">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charest=utf8" />
+      <title>activity</title>
+</head>
+<body background="images/456.jpg">
+  <a href="首頁.html"><img src="images/首頁.jpg" width="100" height="100" style="position:absolute;top:10px; right:200px;"></a>
+  <a href="天氣.html"><img src="images/天氣.jpg" width="100" height="100" style="position:absolute;top:200px; right:200px;"></a>
+  <a href="旅館.html"><img src="images/旅館.jpg" width="100" height="100" style="position:absolute;top:390px; right:200px;"></a>
+  <a href="停車.html"><img src="images/停車.png" width="100" height="100" style="position:absolute;top:580px; right:200px;"></a>
+  <a href="商店.html"><img src="images/商店.jpg" width="100" height="100" style="position:absolute;top:770px; right:200px;"></a>
+  <font size="20">
+  <b style="position:absolute;top:40px; right:100px;">首頁</b>
+  <b style="position:absolute;top:230px; right:100px;">天氣</b>
+  <b style="position:absolute;top:420px; right:100px;">旅館</b>
+  <b style="position:absolute;top:610px; right:100px;">停車</b>
+  <b style="position:absolute;top:810px; right:100px;">商店</b>
+    </font>
+<p>請選擇活動地點：
+  <input type="text" id="author" value=""> &nbsp
+  <button type="submit" onclick="refreshTable()" style="width:100px">查詢活動</button><br>
+      </p>
+    <div class="container">
+            <div class="row"> </div>
+          </div>
+          <div class="container">
+            <table id="act" border="1" cellpadding="10">
+              <tbody class="text-justify">
+                <tr class="text-center">
+                  <th>
+                    <b>活動名稱</b>
+                  </th>
+                  <th>
+                    <b>種類</b>
+                  </th>
+                  <th>
+                    <b>開始時間</b>
+                  </th>
+                  <th>
+                    <b>結束時間</b>
+                  </th>
+                  <th>
+                    <b>活動主題</b>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      <script>
+            window.onload = function(){
+              refreshTable();
+            }
+            function refreshTable()
+            {
+              var author = document.getElementById("author").value;
+                  var table = document.getElementById("act");
+                              
+                  var rowCount = table.rows.length;
+                              
+                  for(i=rowCount-1;i>0;i--)
+                  {
+                        table.deleteRow(i);
+                  }
+                              
+                  var xhttp = new XMLHttpRequest();
+                  xhttp.open("POST", "http://localhost:1880/act", false);
+                  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                  xhttp.send("author="+author);
+                  var response = JSON.parse(xhttp.responseText);
+                              
+                              
+                  for (i = 0; i < response.length; i++)
+                  {
+                        var rowCount = table.rows.length;
+                        var row = table.insertRow(rowCount);
+                                          
+                      row.insertCell(0).innerHTML = response[i].author;
+                    row.insertCell(1).innerHTML = response[i].type;
+                    row.insertCell(2).innerHTML = response[i].startdata;
+                    row.insertCell(3).innerHTML = response[i].enddata;
+                    row.insertCell(4).innerHTML = response[i].title;
+                  }
+              /*var radios = document.getElementsById("author").value;
+              var author = "";
+              for(i=0; i< radios.length;i++)
+              {
+                if(radios[i].checked)
+                {
+                  author = radios[i].value;
+                  break;
+                }
+              }
+            
+              var table = document.getElementById("act");
+              var rowCount = table.rows.length;
+            
+              for(i=rowCount-1;i>0;i--)
+              {
+                  table.deleteRow(i);
+              }
+            
+              var xhttp = new XMLHttpRequest();
+              xhttp.open("POST", "http://localhost:1880/act", false);
+              xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhttp.send("author=" + author );
+              var response = JSON.parse(xhttp.responseText);
+      
+            
+              for (i = 0; i < response.length; i++)
+              {
+                var rowCount = table.rows.length;
+                var row = table.insertRow(rowCount);
+                
+                row.insertCell(0).innerHTML = response[i].author;
+                row.insertCell(1).innerHTML = response[i].type;
+                row.insertCell(2).innerHTML = response[i].startdata;
+                row.insertCell(3).innerHTML = response[i].enddata;
+                row.insertCell(4).innerHTML = response[i].title;
+              }*/
+              /*<select name = "type" id="type" onchange="refreshTable();">
+            <option value="藝文推廣">藝文推廣</option>
+            <option value="藝術展演" >藝術展演</option>
+            <option value="街頭藝人">街頭藝人</option>
+            <option value="展覽訊息">展覽訊息</option>
+            <option value="文化設施">文化設施</option>
+            <option value="文化發展">文化發展</option>
+      </select>*/
+            }
+            
+      </script>
+</body>
+</html>

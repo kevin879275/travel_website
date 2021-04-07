@@ -1,0 +1,82 @@
+<html xmlns="http:///www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+	<title>Hotel</title>
+</head>
+<body background="images/456.jpg">
+	<a href="首頁.html"><img src="images/首頁.jpg" width="100" height="100" style="position:absolute;top:10px; right:200px;"></a>
+	<a href="天氣.html"><img src="images/天氣.jpg" width="100" height="100" style="position:absolute;top:200px; right:200px;"></a>
+	<a href="停車.html"><img src="images/停車.png" width="100" height="100" style="position:absolute;top:390px; right:200px;"></a>
+	<a href="商店.html"><img src="images/商店.jpg" width="100" height="100" style="position:absolute;top:580px; right:200px;"></a>
+	<a href="活動.html"><img src="images/活動.jpg" width="100" height="100" style="position:absolute;top:770px; right:200px;"></a>
+	<font size="20">
+	<b style="position:absolute;top:40px; right:100px;">首頁</b>
+	<b style="position:absolute;top:230px; right:100px;">天氣</b>
+	<b style="position:absolute;top:420px; right:100px;">停車</b>
+	<b style="position:absolute;top:610px; right:100px;">商店</b>
+	<b style="position:absolute;top:810px; right:100px;">活動</b>
+    </font>
+	<div>
+  <p>請選擇金額範圍: 1000-20000</p>
+		<label><b>請選擇最高住宿金額 : </b></label>
+		<p id="show"></p>
+
+		1000 &ensp;
+
+		<input type="range" id="limit" min="1000" max="20000" value="1000" onchange="refreshTable()">
+
+		&ensp; 20000<br>
+
+		<br><hr><br>
+
+		<table id="hotelTable" border="1" cellpadding="10">
+			<tr>
+				<th><b>民宿名稱</b></th>
+				<td><b>電話</b></td>
+				<td><b>地址</b></td>
+				<td><b>最低房價</b></td>
+				<td><b>最高房價</b></td>
+				<td><b>房間數量</b></td>
+			</tr>
+		</table>
+	</div>
+
+	<script>
+		window.onload = function(){
+			refreshTable();
+		}
+		function refreshTable(){
+			document.getElementById("show").innerHTML = document.getElementById("limit").value;
+
+			var table = document.getElementById("hotelTable");
+
+			var rowCount = table.rows.length;
+			for(i = rowCount - 1; i > 0; i--)
+			{
+				table.deleteRow(i);
+			}
+
+			var limit = document.getElementById("limit").value;
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "http://localhost:1880/hotel", false);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("limit=" + limit);
+			var response = JSON.parse(xhttp.responseText);
+
+			for(i = 0; i < response.length; i++)
+			{
+				var rowCount = table.rows.length;
+				var row = table.insertRow(rowCount);
+
+				row.insertCell(0).innerHTML = response[i].name;
+				row.insertCell(1).innerHTML = response[i].tel;
+				row.insertCell(2).innerHTML = response[i].address;
+				row.insertCell(3).innerHTML = response[i].button_price;
+				row.insertCell(4).innerHTML = response[i].higher_price;
+				row.insertCell(5).innerHTML = response[i].room;
+			}
+		}
+	</script>
+</body>
+</html>
